@@ -1,0 +1,51 @@
+{
+  "name": "shotlist-forge",
+  "version": "0.1.0",
+  "description": "Turn one concept into a structured, shot-by-shot prompt sequence for text-to-video models (Seedance, Kling, Runway, Veo). Storyboard your AI video in seconds.",
+  "type": "module",
+  "main": "src/index.js",
+  "bin": {
+    "shotlist": "src/cli.js"
+  },
+  "scripts": {
+    "start": "node src/cli.js",
+    "test": "node test/smoke.test.js"
+  },
+  "keywords": [
+    "seedance",
+    "text-to-video",
+    "ai-video",
+    "shotlist",
+    "storyboard",
+    "prompt-engineering",
+    "prompt-generator",
+    "video-generation",
+    "cli",
+    "kling",
+    "runway",
+    "veo",
+    "sora"
+  ],
+  "author": "Thox (https://github.com/thoxakihiko)",
+  "license": "MIT",
+  "homepage": "https://github.com/thoxakihiko/shotlist-forge#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thoxakihiko/shotlist-forge.git"
+  },
+  "bugs": {
+    "url": "https://github.com/thoxakihiko/shotlist-forge/issues"
+  },
+  "dependencies": {
+    "seedance-prompt-forge": "^0.1.1"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "src",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ]
+}
