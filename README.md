@@ -58,7 +58,7 @@ Shot 6 · 5s · medium
 
 Lists that fit in one pass print exactly as before (no pass headers).
 
-> Seedance 2.5's public API isn't released yet (coming soon via BytePlus ModelArk) and new resolutions aren't officially confirmed, so neither is encoded here. Source: [ByteDance Seed blog](https://seed.bytedance.com/en/blog/one-take-creation-flexible-referencing-introducing-seedance-2-5).
+> Only the duration limit is encoded. API parameters (the Seedance 2.5 API is on [BytePlus ModelArk](https://www.byteplus.com/en/product/seedance)) and resolutions (which differ across official surfaces) are left to your generation tool. Source: [ByteDance Seed blog](https://seed.bytedance.com/en/blog/one-take-creation-flexible-referencing-introducing-seedance-2-5).
 
 ## ✨ Features
 
