@@ -18,8 +18,8 @@ export const models = {
     // Multi-round extension keeps characters/environment consistent, so later
     // passes can continue the first one instead of starting cold.
     multiRoundExtension: true
-    // TODO: resolutions and API parameters are not officially published yet
-    // (API coming soon via BytePlus ModelArk) — do not add them here.
+    // TODO: resolutions and API parameters are not encoded here — the API is
+    // on BytePlus ModelArk; take model IDs/parameters from its docs.
   }
 };
 
