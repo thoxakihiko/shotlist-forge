@@ -10,6 +10,8 @@ Turn one concept into a structured, shot-by-shot prompt sequence.
 USAGE:
   shotlist --subject "a barista" --setting "cozy cafe" --pattern ad --shots 6 --duration 15
   shotlist --subject "a runner" --beats "laces up; sprints; crosses finish line"
+  shotlist --subject "a chef" --shots 8 --duration 45     (Seedance 2.5: split into ≤30s passes)
+  shotlist --subject "a chef" --shots 8 --duration 45 --model seedance-2.0   (≤15s passes)
   shotlist patterns             list available shot-rhythm patterns
   shotlist --help               show this help
 
@@ -24,8 +26,10 @@ FLAGS:
   --pattern   shot rhythm: ad | narrative | montage | reveal  (default: narrative)
   --beats     per-shot actions, separated by ";"  (sets the shot count)
   --shots     number of shots (ignored if --beats is given)
-  --duration  total seconds, distributed across the shots
+  --duration  total seconds, distributed across the shots; lists longer than
+              the model's single-pass limit are split into generation passes
   --movement  fix the camera movement for every shot (default: auto, from pattern)
+  --model     seedance-2.5 (default, ≤30s per pass) or seedance-2.0 (≤15s per pass)
   --json      output JSON instead of formatted text
 
 Every continuity flag accepts a preset key OR free text (powered by

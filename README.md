@@ -34,13 +34,39 @@ A trail runner, reaches the summit, in misty mountain ridge. Cinematic film look
 
 ---
 
+## 🆕 What's new — Seedance 2.5 (v0.2.0)
+
+Shot lists now know how long a model can generate in **one pass**, and split the
+sequence into generation passes automatically.
+
+- **Seedance 2.5 is the default** — up to **30s per pass** (Seedance 2.0: 15s). Keep the old behaviour with `--model seedance-2.0`.
+- **Pass splitting** — consecutive shots are grouped into passes that each fit the limit. Shots are never cut in half; order is preserved. Every shot gets a `pass` number (also in `--json`).
+- On 2.5, later passes can be chained with **multi-round extension**, which keeps characters and environment consistent across rounds.
+- New library export `planPasses(shots, model)`.
+
+```bash
+shotlist --subject "a chef" --shots 8 --duration 45
+```
+```
+── Pass 1/2 · 30s ──
+Shot 1 · 6s · extreme-wide
+...
+── Pass 2/2 · 15s ──
+Shot 6 · 5s · medium
+...
+```
+
+Lists that fit in one pass print exactly as before (no pass headers).
+
+> Seedance 2.5's public API isn't released yet (coming soon via BytePlus ModelArk) and new resolutions aren't officially confirmed, so neither is encoded here. Source: [ByteDance Seed blog](https://seed.bytedance.com/en/blog/one-take-creation-flexible-referencing-introducing-seedance-2-5).
+
 ## ✨ Features
 
 - 🎬 **Concept → sequence** — one input, a full numbered shot list with per-shot prompts.
 - 🎞️ **Cinematic patterns** — `ad`, `narrative`, `montage`, `reveal`: each varies the framing and camera moves the way that style of edit actually cuts.
 - 🔒 **Continuity built in** — style, lighting, mood, lens, and aspect stay identical across every shot, so the sequence feels like one piece.
 - ✍️ **Beats → shots** — pass `--beats "a; b; c"` and each beat becomes its own shot.
-- ⏱️ **Duration planning** — give a total length; it distributes whole seconds across the shots.
+- ⏱️ **Duration planning** — give a total length; it distributes whole seconds across the shots and splits them into generation passes that fit the model (≤30s on Seedance 2.5, ≤15s on 2.0).
 - 📦 **CLI _and_ library**, `--json` output, built on the zero-dependency `seedance-prompt-forge`.
 
 ## Install
@@ -82,7 +108,7 @@ shotlist --help
 ### As a library
 
 ```js
-import { buildShotList, formatShotList } from "shotlist-forge";
+import { buildShotList, formatShotList, planPasses } from "shotlist-forge";
 
 const shots = buildShotList({
   subject: "a barista",
@@ -95,7 +121,10 @@ const shots = buildShotList({
 });
 
 console.log(formatShotList(shots));
-// shots is also a plain array: [{ n, shot, movement, action, seconds, prompt }, ...]
+// shots is also a plain array: [{ n, shot, movement, action, seconds, pass, prompt }, ...]
+
+planPasses(shots);                 // [{ pass: 1, shots: [1, 2, 3, 4, 5, 6], seconds: 15 }]
+planPasses(shots, "seedance-2.0"); // same list, planned against the 15s limit
 ```
 
 ## Flags
@@ -114,6 +143,7 @@ console.log(formatShotList(shots));
 | `--shots` | Number of shots (if no `--beats`) | `6` |
 | `--duration` | Total seconds, distributed across shots | `15` |
 | `--movement` | Fix camera movement for all shots | `slow-push` |
+| `--model` | Target model — sets the per-pass limit | `seedance-2.5` (default), `seedance-2.0` |
 | `--json` | Output JSON instead of text | — |
 
 Every continuity flag accepts a preset key **or** free text — powered by
@@ -139,6 +169,8 @@ Each pattern is just an ordered list of shot sizes + camera moves in
    **every** shot and handed to `seedance-prompt-forge`, which assembles the
    final ordered prompt.
 4. Durations are distributed across the shots to hit your target length.
+5. Consecutive shots are grouped into generation passes that each fit the
+   model's single-pass limit (30s on Seedance 2.5, 15s on 2.0).
 
 ## Related
 

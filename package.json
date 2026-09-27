@@ -1,6 +1,6 @@
 {
   "name": "shotlist-forge",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Turn one concept into a structured, shot-by-shot prompt sequence for text-to-video models (Seedance, Kling, Runway, Veo). Storyboard your AI video in seconds.",
   "type": "module",
   "main": "src/index.js",
